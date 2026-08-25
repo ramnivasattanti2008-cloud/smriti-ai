@@ -11,6 +11,7 @@ import {
   BottomNavigation,
   Modal,
   AdaptiveWidget,
+  SmartDailyPlan,
   type NavTab,
 } from './components';
 import { ActivitiesPage, MemoriesPage, RemindersPage } from './pages';
@@ -23,6 +24,7 @@ import {
   MOCK_PROGRESS,
   type ReminderData,
 } from './data/mockData';
+import type { GameDifficulty } from './types';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('home');
@@ -36,9 +38,11 @@ export function App() {
     );
   };
 
-  const handleStartActivity = (activityId: string) => {
+  const handleStartActivity = (activityId: string, _diff?: GameDifficulty) => {
     if (activityId === 'memory-match') {
       setIsPlayingGame(true);
+    } else if (activityId === 'memory-moment') {
+      setActiveTab('memories');
     } else {
       alert('This activity is coming soon!');
     }
@@ -107,6 +111,11 @@ export function App() {
               </div>
             </div>
           </section>
+
+          {/* Smart Daily Plan (AI Personalization Engine) */}
+          <SmartDailyPlan
+            onStartActivity={(id, diff) => handleStartActivity(id, diff)}
+          />
 
           {/* Adaptive Engine Recommendation Widget */}
           <AdaptiveWidget
