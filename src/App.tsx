@@ -10,9 +10,10 @@ import {
   ProgressCard,
   BottomNavigation,
   Modal,
+  AdaptiveWidget,
   type NavTab,
 } from './components';
-import { ActivitiesPage } from './pages';
+import { ActivitiesPage, MemoriesPage, RemindersPage } from './pages';
 import { MemoryMatch } from './games';
 import {
   MOCK_USER,
@@ -107,6 +108,11 @@ export function App() {
             </div>
           </section>
 
+          {/* Adaptive Engine Recommendation Widget */}
+          <AdaptiveWidget
+            onStartRecommended={() => handleStartActivity('memory-match')}
+          />
+
           {/* Today's Activities Overview */}
           <section className="space-y-4" aria-labelledby="today-activities-heading">
             <div className="flex items-center justify-between">
@@ -165,7 +171,7 @@ export function App() {
                   date={mem.date}
                   bgGradient={mem.bgGradient}
                   iconName={mem.iconName}
-                  onClick={() => alert(`Opening memory: ${mem.title}`)}
+                  onClick={() => setActiveTab('memories')}
                 />
               ))}
             </div>
@@ -182,9 +188,12 @@ export function App() {
                 >
                   Today&apos;s Reminders
                 </h2>
-                <span className="text-xs font-semibold text-slate-400">
-                  Tap to complete
-                </span>
+                <button
+                  onClick={() => setActiveTab('reminders')}
+                  className="text-xs font-semibold text-teal-400 hover:underline"
+                >
+                  Manage Reminders &rarr;
+                </button>
               </div>
 
               <div className="space-y-3">
@@ -254,55 +263,24 @@ export function App() {
         </div>
       )}
 
-      {/* Tab View 3: MEMORIES */}
+      {/* Tab View 3: MEMORIES PAGE */}
       {activeTab === 'memories' && (
-        <div className="max-w-5xl mx-auto p-6 lg:p-8 space-y-6 animate-in fade-in duration-150">
-          <h1 className="text-3xl font-extrabold text-white">Your Memories</h1>
-          <p className="text-slate-300">
-            A collection of cherished photos and moments shared with your family.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {MOCK_MEMORIES.map((mem) => (
-              <MemoryCard
-                key={mem.id}
-                title={mem.title}
-                description={mem.description}
-                date={mem.date}
-                bgGradient={mem.bgGradient}
-                iconName={mem.iconName}
-                onClick={() => alert(`Opening memory: ${mem.title}`)}
-              />
-            ))}
-          </div>
+        <div className="animate-in fade-in duration-150">
+          <MemoriesPage />
         </div>
       )}
 
-      {/* Tab View 4: REMINDERS */}
+      {/* Tab View 4: REMINDERS PAGE */}
       {activeTab === 'reminders' && (
-        <div className="max-w-4xl mx-auto p-6 lg:p-8 space-y-6 animate-in fade-in duration-150">
-          <h1 className="text-3xl font-extrabold text-white">Today&apos;s Reminders</h1>
-          <p className="text-slate-300">
-            Check your schedule for water, family calls, and daily activities.
-          </p>
-          <div className="space-y-3">
-            {reminders.map((rem) => (
-              <ReminderItem
-                key={rem.id}
-                title={rem.title}
-                time={rem.time}
-                category={rem.category}
-                completed={rem.completed}
-                onToggle={() => handleToggleReminder(rem.id)}
-              />
-            ))}
-          </div>
+        <div className="animate-in fade-in duration-150">
+          <RemindersPage />
         </div>
       )}
 
       {/* Tab View 5: PROFILE */}
       {activeTab === 'profile' && (
         <div className="max-w-3xl mx-auto p-6 lg:p-8 space-y-6 text-center animate-in fade-in duration-150">
-          <div className="w-24 h-24 bg-teal-950 border-2 border-teal-500 rounded-full flex items-center justify-center mx-auto text-teal-300 text-3xl font-bold">
+          <div className="w-24 h-24 bg-teal-950 border-2 border-teal-500 rounded-full flex items-center justify-center mx-auto text-teal-300 text-3xl font-bold shadow-lg">
             R
           </div>
           <div>

@@ -491,10 +491,15 @@ Create a polished demo flow:
 
 # CURRENT MILESTONE
 
-Milestone 1 — Project Foundation
+Milestone 6 — Adaptive Cognitive Engine / Milestone 8 — Memory System
+
+Completed Milestones:
+- [x] Milestone 1 — Project Foundation
+- [x] Milestone 2 — Design System
+- [x] Milestone 3 — Elder Dashboard
+- [x] Milestone 4 — Cognitive Games (Memory Match)
+- [x] Milestone 5 — Game Results & Session Storage
 
 Status:
+[ ] Next up
 
-[~] In progress
-
-Do not start future milestones until the current milestone is stable and tested.

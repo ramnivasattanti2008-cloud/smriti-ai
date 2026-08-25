@@ -13,3 +13,4 @@ export * from './MemoryCard';
 export * from './ReminderItem';
 export * from './ProgressCard';
 export * from './BottomNavigation';
+export * from './AdaptiveWidget';

@@ -4,7 +4,7 @@ import { CheckCircle2, Clock, Phone, Activity, Droplet } from 'lucide-react';
 export interface ReminderItemProps {
   title: string;
   time: string;
-  category: 'medication' | 'water' | 'family' | 'activity';
+  category: 'medication' | 'water' | 'family' | 'activity' | 'appointment' | 'meal';
   completed: boolean;
   onToggle?: () => void;
 }
