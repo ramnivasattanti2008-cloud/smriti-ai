@@ -1,341 +1,109 @@
-import { useState } from 'react';
-import { Play, Mic, Sparkles } from 'lucide-react';
-import {
-  Button,
-  Card,
-  DashboardHeader,
-  ActivityCard,
-  MemoryCard,
-  ReminderItem,
-  ProgressCard,
-  BottomNavigation,
-  Modal,
-  AdaptiveWidget,
-  SmartDailyPlan,
-  type NavTab,
-} from './components';
-import { ActivitiesPage, MemoriesPage, RemindersPage } from './pages';
-import { MemoryMatch } from './games';
-import {
-  MOCK_USER,
-  MOCK_ACTIVITIES,
-  MOCK_MEMORIES,
-  MOCK_REMINDERS,
-  MOCK_PROGRESS,
-  type ReminderData,
-} from './data/mockData';
-import type { GameDifficulty } from './types';
+import { useState } from "react";
+import Welcome from "./pages/Welcome";
 
-export function App() {
-  const [activeTab, setActiveTab] = useState<NavTab>('home');
-  const [isPlayingGame, setIsPlayingGame] = useState(false);
-  const [reminders, setReminders] = useState<ReminderData[]>(MOCK_REMINDERS);
-  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+type Role = "patient" | "caretaker";
 
-  const handleToggleReminder = (id: string) => {
-    setReminders((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, completed: !r.completed } : r))
-    );
-  };
+function App() {
+  const [role, setRole] = useState<Role | null>(null);
 
-  const handleStartActivity = (activityId: string, _diff?: GameDifficulty) => {
-    if (activityId === 'memory-match') {
-      setIsPlayingGame(true);
-    } else if (activityId === 'memory-moment') {
-      setActiveTab('memories');
-    } else {
-      alert('This activity is coming soon!');
-    }
-  };
-
-  // Render Memory Match Game if active
-  if (isPlayingGame) {
+  if (!role) {
     return (
-      <div className="min-h-screen bg-slate-900 text-slate-100 font-sans select-none pb-24">
-        <MemoryMatch
-          onBackToDashboard={() => setIsPlayingGame(false)}
-        />
-        <BottomNavigation
-          activeTab={activeTab}
-          onTabChange={(tab) => {
-            setIsPlayingGame(false);
-            setActiveTab(tab);
-          }}
-        />
-      </div>
+      <Welcome
+        onSelectRole={(selectedRole) => {
+          setRole(selectedRole);
+        }}
+      />
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans pb-24 select-none">
-      {/* Tab View 1: HOME DASHBOARD */}
-      {activeTab === 'home' && (
-        <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 animate-in fade-in duration-150">
-          {/* Header */}
-          <DashboardHeader
-            userName={MOCK_USER.name}
-            greeting={MOCK_USER.greeting}
-            supportiveMessage={MOCK_USER.supportiveMessage}
-            onNotificationClick={() => alert('Notifications clicked')}
-            onProfileClick={() => setActiveTab('profile')}
-          />
-
-          {/* Hero Action Card */}
-          <section aria-label="Main Cognitive Activity Call to Action">
-            <div className="bg-gradient-to-r from-teal-900/90 via-slate-800 to-indigo-950/90 border border-teal-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div className="space-y-2 max-w-xl">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 text-xs sm:text-sm font-bold uppercase tracking-wider text-teal-300 bg-teal-950/80 border border-teal-700/80 rounded-full">
-                    <Sparkles className="w-4 h-4 text-amber-400" />
-                    Recommended Morning Activity
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
-                    Ready for a quick brain activity?
-                  </h2>
-                  <p className="text-base sm:text-lg text-slate-200 font-medium">
-                    A gentle 5-minute memory game designed for your enjoyment.
-                  </p>
-                </div>
-
-                <div className="shrink-0">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    leftIcon={<Play className="w-7 h-7 fill-white" />}
-                    onClick={() => handleStartActivity('memory-match')}
-                    className="shadow-xl text-lg px-8 py-4 bg-teal-500 hover:bg-teal-400 text-slate-950 font-extrabold border-2 border-teal-300"
-                  >
-                    Start Activity
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Smart Daily Plan (AI Personalization Engine) */}
-          <SmartDailyPlan
-            onStartActivity={(id, diff) => handleStartActivity(id, diff)}
-          />
-
-          {/* Adaptive Engine Recommendation Widget */}
-          <AdaptiveWidget
-            onStartRecommended={() => handleStartActivity('memory-match')}
-          />
-
-          {/* Today's Activities Overview */}
-          <section className="space-y-4" aria-labelledby="today-activities-heading">
-            <div className="flex items-center justify-between">
-              <h2
-                id="today-activities-heading"
-                className="text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight"
-              >
-                Today&apos;s Activities
-              </h2>
-              <button
-                onClick={() => setActiveTab('activities')}
-                className="text-sm font-bold text-teal-400 hover:underline min-h-[44px] px-2 flex items-center"
-              >
-                View All &rarr;
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              {MOCK_ACTIVITIES.map((act) => (
-                <ActivityCard
-                  key={act.id}
-                  title={act.title}
-                  duration={act.duration}
-                  category={act.category}
-                  iconName={act.iconName}
-                  completed={act.completed}
-                  onClick={() => handleStartActivity(act.id === 'act-1' ? 'memory-match' : act.id)}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* Memories Section */}
-          <section className="space-y-4" aria-labelledby="memories-heading">
-            <div className="flex items-center justify-between">
-              <h2
-                id="memories-heading"
-                className="text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight"
-              >
-                Your Memories
-              </h2>
-              <button
-                onClick={() => setActiveTab('memories')}
-                className="text-sm font-bold text-teal-400 hover:underline min-h-[44px] px-2 flex items-center"
-              >
-                View All &rarr;
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {MOCK_MEMORIES.map((mem) => (
-                <MemoryCard
-                  key={mem.id}
-                  title={mem.title}
-                  description={mem.description}
-                  date={mem.date}
-                  bgGradient={mem.bgGradient}
-                  iconName={mem.iconName}
-                  onClick={() => setActiveTab('memories')}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* Reminders & Progress Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Reminders Column */}
-            <section className="space-y-4" aria-labelledby="reminders-heading">
-              <div className="flex items-center justify-between">
-                <h2
-                  id="reminders-heading"
-                  className="text-2xl font-bold text-slate-50 tracking-tight"
-                >
-                  Today&apos;s Reminders
-                </h2>
-                <button
-                  onClick={() => setActiveTab('reminders')}
-                  className="text-xs font-semibold text-teal-400 hover:underline"
-                >
-                  Manage Reminders &rarr;
-                </button>
-              </div>
-
-              <div className="space-y-3">
-                {reminders.map((rem) => (
-                  <ReminderItem
-                    key={rem.id}
-                    title={rem.title}
-                    time={rem.time}
-                    category={rem.category}
-                    completed={rem.completed}
-                    onToggle={() => handleToggleReminder(rem.id)}
-                  />
-                ))}
-              </div>
-            </section>
-
-            {/* Progress Column */}
-            <section className="space-y-4" aria-labelledby="progress-heading">
-              <div className="flex items-center justify-between">
-                <h2
-                  id="progress-heading"
-                  className="text-2xl font-bold text-slate-50 tracking-tight"
-                >
-                  Activity Summary
-                </h2>
-              </div>
-              <ProgressCard progress={MOCK_PROGRESS} />
-            </section>
-          </div>
-
-          {/* Voice Assistant Focal Section */}
-          <section aria-label="Voice Assistant Help">
-            <Card className="bg-slate-800/80 border-slate-700 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-4 text-center sm:text-left">
-                <div className="p-4 bg-teal-950 border border-teal-700 text-teal-400 rounded-2xl shrink-0 mx-auto sm:mx-0">
-                  <Mic className="w-8 h-8" />
-                </div>
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-50">
-                    Need Help or Have a Question?
-                  </h3>
-                  <p className="text-base text-slate-300 mt-1">
-                    Tap to speak with your SMRITI AI Companion anytime.
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="secondary"
-                size="lg"
-                leftIcon={<Mic className="w-6 h-6 text-teal-400" />}
-                onClick={() => setIsHelpModalOpen(true)}
-                className="shrink-0 w-full sm:w-auto"
-              >
-                Need Help?
-              </Button>
-            </Card>
-          </section>
-        </div>
-      )}
-
-      {/* Tab View 2: ACTIVITIES HUB */}
-      {activeTab === 'activities' && (
-        <div className="animate-in fade-in duration-150">
-          <ActivitiesPage
-            onStartActivity={(activityId) => handleStartActivity(activityId)}
-          />
-        </div>
-      )}
-
-      {/* Tab View 3: MEMORIES PAGE */}
-      {activeTab === 'memories' && (
-        <div className="animate-in fade-in duration-150">
-          <MemoriesPage />
-        </div>
-      )}
-
-      {/* Tab View 4: REMINDERS PAGE */}
-      {activeTab === 'reminders' && (
-        <div className="animate-in fade-in duration-150">
-          <RemindersPage />
-        </div>
-      )}
-
-      {/* Tab View 5: PROFILE */}
-      {activeTab === 'profile' && (
-        <div className="max-w-3xl mx-auto p-6 lg:p-8 space-y-6 text-center animate-in fade-in duration-150">
-          <div className="w-24 h-24 bg-teal-950 border-2 border-teal-500 rounded-full flex items-center justify-center mx-auto text-teal-300 text-3xl font-bold shadow-lg">
-            R
-          </div>
-          <div>
-            <h1 className="text-3xl font-extrabold text-white">Ravi Kumar</h1>
-            <p className="text-slate-300 mt-1">Elder Account &bull; SMRITI AI</p>
-          </div>
-          <Card className="text-left p-6 space-y-4">
-            <h3 className="text-xl font-bold text-slate-100">Preferences</h3>
-            <p className="text-base text-slate-300">
-              High contrast: Enabled &bull; Text size: Large &bull; Language: English
-            </p>
-          </Card>
-        </div>
-      )}
-
-      {/* Bottom Navigation */}
-      <BottomNavigation
-        activeTab={activeTab}
-        onTabChange={(tab) => setActiveTab(tab)}
-      />
-
-      {/* Voice Assistant Companion Modal */}
-      <Modal
-        isOpen={isHelpModalOpen}
-        onClose={() => setIsHelpModalOpen(false)}
-        title="Voice Assistant Companion"
-        description="SMRITI AI Voice Assistance"
-        footer={
-          <Button variant="primary" onClick={() => setIsHelpModalOpen(false)}>
-            Close
-          </Button>
-        }
+    <main
+      className="
+        min-h-screen
+        bg-[#f5f7f1]
+        p-8
+      "
+    >
+      <div
+        className="
+          mx-auto
+          max-w-4xl
+          rounded-[32px]
+          border
+          border-black/5
+          bg-white/70
+          p-8
+          shadow-xl
+          backdrop-blur-xl
+          smriti-page-enter
+        "
       >
-        <div className="text-center py-6 space-y-4">
-          <div className="w-16 h-16 bg-teal-950 border border-teal-700 rounded-full flex items-center justify-center mx-auto text-teal-400 animate-pulse">
-            <Mic className="w-8 h-8" />
-          </div>
-          <p className="text-lg font-bold text-slate-100">
-            &ldquo;Hello Ravi! How can I help you today?&rdquo;
-          </p>
-          <p className="text-sm text-slate-400">
-            Voice Assistant feature will be connected in Milestone 10.
-          </p>
-        </div>
-      </Modal>
-    </div>
+        <button
+          type="button"
+          onClick={() => setRole(null)}
+          className="
+            mb-8
+            rounded-full
+            bg-[#718866]
+            px-5
+            py-3
+            text-sm
+            font-medium
+            text-white
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:bg-[#52674a]
+          "
+        >
+          ← Back
+        </button>
+
+        <p
+          className="
+            text-xs
+            font-bold
+            uppercase
+            tracking-[0.2em]
+            text-[#718866]
+          "
+        >
+          {role === "patient"
+            ? "Patient experience"
+            : "Caretaker experience"}
+        </p>
+
+        <h1
+          className="
+            mt-3
+            text-4xl
+            font-semibold
+            tracking-tight
+            text-[#172018]
+          "
+        >
+          {role === "patient"
+            ? "Welcome to your SMRITI space."
+            : "Welcome to the Caretaker space."}
+        </h1>
+
+        <p
+          className="
+            mt-4
+            max-w-xl
+            leading-7
+            text-[#647064]
+          "
+        >
+          This is the next screen we'll replace with
+          the complete animated{" "}
+          {role === "patient"
+            ? "Patient Login"
+            : "Caretaker Login"}{" "}
+          experience.
+        </p>
+      </div>
+    </main>
   );
 }
 

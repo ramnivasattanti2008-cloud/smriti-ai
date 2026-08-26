@@ -2,6 +2,8 @@ export type UserRole = 'elder' | 'caregiver' | 'health_worker';
 
 export type GameDifficulty = 'easy' | 'medium' | 'hard';
 
+export type EngagementLevel = 'low' | 'moderate' | 'high';
+
 export interface User {
   id: string;
   name: string;
@@ -43,6 +45,29 @@ export interface GameResult {
   pairsCompleted: number;
   totalPairs: number;
   difficulty: GameDifficulty;
+}
+
+export interface PersonalizationProfile {
+  preferredActivities: string[];
+  completedSessions: number;
+  averageGameScore: number;
+  averageMistakes: number;
+  averageCompletionTimeSeconds: number;
+  recentActivityCount: number;
+  currentStreakDays: number;
+  engagementLevel: EngagementLevel;
+}
+
+export interface ActivityRecommendation {
+  activityId: string;
+  activityName: string;
+  difficulty: GameDifficulty;
+  explanation: string;
+}
+
+export interface DifficultyRecommendation {
+  difficulty: GameDifficulty;
+  explanation: string;
 }
 
 export interface Memory {

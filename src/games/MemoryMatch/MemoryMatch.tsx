@@ -22,14 +22,16 @@ import type {
 
 export interface MemoryMatchProps {
   userId?: string;
+  initialDifficulty?: GameDifficulty;
   onBackToDashboard: () => void;
 }
 
 export const MemoryMatch: React.FC<MemoryMatchProps> = ({
   userId = 'elder-user-1',
+  initialDifficulty = 'easy',
   onBackToDashboard,
 }) => {
-  const [difficulty, setDifficulty] = useState<GameDifficulty>('easy');
+  const [difficulty, setDifficulty] = useState<GameDifficulty>(initialDifficulty);
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'paused' | 'completed'>('setup');
   
   const [cards, setCards] = useState<GameCard[]>([]);

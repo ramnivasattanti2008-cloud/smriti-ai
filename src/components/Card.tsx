@@ -28,7 +28,7 @@ export const Card: React.FC<CardProps> = ({
       onClick={onClick}
       className={`bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 shadow-lg shadow-slate-950/20 text-slate-100 ${
         isInteractive
-          ? 'cursor-pointer transition-all duration-150 hover:border-slate-500 hover:bg-slate-800 hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] focus-within:ring-2 focus-within:ring-teal-400'
+          ? 'cursor-pointer transition-all duration-200 ease-out hover:border-teal-700/80 hover:bg-slate-800 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] focus-within:ring-2 focus-within:ring-amber-300'
           : ''
       } ${className}`}
     >

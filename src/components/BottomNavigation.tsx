@@ -29,9 +29,9 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center justify-center min-h-[48px] px-3 py-1.5 rounded-xl transition-all select-none ${
+              className={`relative flex flex-col items-center justify-center min-h-[48px] px-3 py-1.5 rounded-xl transition-all duration-200 select-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300 ${
                 isActive
-                  ? 'text-teal-400 bg-teal-950/60 font-bold'
+                  ? 'text-teal-300 bg-teal-950/70 font-bold after:absolute after:-top-2 after:h-1 after:w-8 after:rounded-full after:bg-amber-300'
                   : 'text-slate-400 hover:text-slate-200 font-medium'
               }`}
             >

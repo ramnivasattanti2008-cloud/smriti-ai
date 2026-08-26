@@ -43,7 +43,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         ref={ref}
         aria-label={ariaLabel}
         disabled={disabled}
-        className={`inline-flex items-center justify-center rounded-xl transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.96] select-none ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
+        className={`inline-flex items-center justify-center rounded-xl transition-all duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed active:translate-y-0 active:scale-[0.96] select-none ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
         {...props}
       >
         {icon}

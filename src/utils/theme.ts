@@ -29,4 +29,32 @@ export const THEME = {
     minHeight: 'min-h-[44px]',
     minWidth: 'min-w-[44px]',
   },
+  spacing: {
+    page: 'p-4 sm:p-6 lg:p-8',
+    section: 'space-y-8',
+    card: 'p-6 sm:p-8',
+  },
+  radius: {
+    surface: 'rounded-2xl',
+    control: 'rounded-xl',
+    pill: 'rounded-full',
+  },
+  elevation: {
+    surface: 'shadow-lg shadow-slate-950/20',
+    raised: 'shadow-xl shadow-slate-950/25',
+  },
+  motion: {
+    micro: 'duration-200 ease-out',
+    component: 'duration-300 ease-out',
+    page: 'duration-[320ms] ease-out',
+  },
+  zIndex: {
+    navigation: 'z-40',
+    modal: 'z-50',
+  },
+  breakpoints: {
+    mobile: 'sm',
+    tablet: 'md',
+    desktop: 'lg',
+  },
 } as const;

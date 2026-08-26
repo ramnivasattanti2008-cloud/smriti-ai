@@ -29,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base styles with 44px+ minimum height for accessibility & large touch target
     const baseStyles =
-      'inline-flex items-center justify-center font-semibold rounded-xl min-h-[48px] px-6 text-base tracking-wide transition-colors duration-150 focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
+      'inline-flex items-center justify-center font-semibold rounded-xl min-h-[48px] px-6 text-base tracking-wide transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed select-none hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]';
 
     const sizeStyles = {
       md: 'min-h-[48px] py-3 text-base font-medium',

@@ -1,0 +1,20 @@
+export const animationDurations = {
+  fast: 180,
+  normal: 300,
+  smooth: 450,
+  slow: 650,
+  cinematic: 900,
+} as const;
+
+export const easing = {
+  smooth: "cubic-bezier(0.22, 1, 0.36, 1)",
+  soft: "cubic-bezier(0.4, 0, 0.2, 1)",
+  bounce: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+} as const;
+
+export const transitions = {
+  fast: `all ${animationDurations.fast}ms ${easing.soft}`,
+  normal: `all ${animationDurations.normal}ms ${easing.soft}`,
+  smooth: `all ${animationDurations.smooth}ms ${easing.smooth}`,
+  cinematic: `all ${animationDurations.cinematic}ms ${easing.smooth}`,
+} as const;
