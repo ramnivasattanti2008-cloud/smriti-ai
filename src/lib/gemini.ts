@@ -12,7 +12,7 @@ export async function getEmbedding(text: string): Promise<number[]> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set')
   }
-  const model = genAI.getEmbeddingModel('text-embedding-004')
+  const model = genAI.getGenerativeModel({ model: 'text-embedding-004' })
   const result = await model.embedContent(text)
   return result.embedding.values
 }
