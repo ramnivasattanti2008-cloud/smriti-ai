@@ -20,6 +20,9 @@ import type {
   GameSession,
 } from '../../types';
 
+const getTimestamp = () => new Date().toISOString();
+const getTimestampMilliseconds = () => new Date().getTime();
+
 export interface MemoryMatchProps {
   userId?: string;
   initialDifficulty?: GameDifficulty;
@@ -39,6 +42,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
   const [moves, setMoves] = useState(0);
   const [mistakes, setMistakes] = useState(0);
   const [matchedPairsCount, setMatchedPairsCount] = useState(0);
+  const [isChecking, setIsChecking] = useState(false);
   
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
@@ -78,6 +82,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
     setGameResult(null);
     setGameState('playing');
     isCheckingRef.current = false;
+    setIsChecking(false);
   };
 
   const handleCardClick = (clickedIndex: number) => {
@@ -97,6 +102,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
     // If 2 cards flipped, evaluate match
     if (newSelected.length === 2) {
       isCheckingRef.current = true;
+      setIsChecking(true);
       setMoves((m) => m + 1);
 
       const [firstIdx, secondIdx] = newSelected;
@@ -115,6 +121,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
           );
           setSelectedCards([]);
           isCheckingRef.current = false;
+          setIsChecking(false);
 
           const newMatchedCount = matchedPairsCount + 1;
           setMatchedPairsCount(newMatchedCount);
@@ -138,6 +145,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
           );
           setSelectedCards([]);
           isCheckingRef.current = false;
+          setIsChecking(false);
         }, 1000);
       }
     }
@@ -171,7 +179,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
 
     // Save session via service
     const sessionObj: GameSession = {
-      id: `session-${Date.now()}`,
+      id: `session-${getTimestampMilliseconds()}`,
       userId,
       gameId: 'memory-match',
       gameTitle: 'Memory Match',
@@ -182,8 +190,8 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
       durationSeconds: finalTime,
       pairsCompleted: pairs,
       totalPairs,
-      startedAt: new Date(Date.now() - finalTime * 1000).toISOString(),
-      completedAt: new Date().toISOString(),
+      startedAt: new Date(getTimestampMilliseconds() - finalTime * 1000).toISOString(),
+      completedAt: getTimestamp(),
       completed: true,
     };
 
@@ -377,7 +385,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({
             card={card}
             index={idx}
             onClick={() => handleCardClick(idx)}
-            disabled={isCheckingRef.current}
+            disabled={isChecking}
           />
         ))}
       </div>

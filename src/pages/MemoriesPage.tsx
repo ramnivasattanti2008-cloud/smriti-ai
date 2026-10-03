@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Heart, Plus, Search, Calendar, Image as ImageIcon } from 'lucide-react';
 import { Button, Card, Input, Modal, Badge } from '../components';
 import { getMemories, addMemory } from '../services/memoryService';
 import type { Memory } from '../types';
 
 export const MemoriesPage: React.FC = () => {
-  const [memories, setMemories] = useState<Memory[]>([]);
+  const [memories, setMemories] = useState<Memory[]>(() => getMemories());
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
@@ -14,10 +14,6 @@ export const MemoriesPage: React.FC = () => {
   const [newTitle, setNewTitle] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [formError, setFormError] = useState('');
-
-  useEffect(() => {
-    setMemories(getMemories());
-  }, []);
 
   const handleCreateMemory = (e: React.FormEvent) => {
     e.preventDefault();

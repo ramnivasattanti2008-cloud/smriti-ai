@@ -13,7 +13,7 @@ AI agents must update this file after reviewing or testing the application.
 
 Current Status:
 
-No review completed yet.
+Milestone review completed on August 26, 2026. Core demo flows build and run; production integrations remain pending.
 
 ---
 
@@ -45,7 +45,7 @@ None.
 
 ## Status
 
-Not reviewed.
+Reviewed: semantic buttons, labelled forms, keyboard-sized controls, reduced-motion preference, and high-contrast preference are implemented in the current demo shell.
 
 Things to check:
 
@@ -65,7 +65,7 @@ Things to check:
 
 ## Status
 
-Not reviewed.
+Reviewed: distinct patient/caretaker shells, responsive navigation drawers, visible demo labels, and non-diagnostic language.
 
 Check:
 
@@ -86,7 +86,7 @@ Check:
 
 ## Status
 
-Not reviewed.
+Verified: patient guest login, caretaker login, patient navigation, AI demo response, simulated location sharing, settings persistence, and caretaker chart rendering.
 
 Check:
 
@@ -109,7 +109,7 @@ Check:
 
 ## Status
 
-Not reviewed.
+Reviewed: AI and location are mock service abstractions with no frontend secrets. Real Firebase/Gemini integration is not connected.
 
 Check:
 

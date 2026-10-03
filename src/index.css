@@ -457,3 +457,20 @@ img {
     --radius-xl: 28px;
   }
 }
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}
+
+html[data-high-contrast="true"] {
+  filter: contrast(1.15);
+}
+
+html[data-high-contrast="true"] :focus-visible {
+  outline-color: #ffffff;
+  outline-width: 4px;
+}

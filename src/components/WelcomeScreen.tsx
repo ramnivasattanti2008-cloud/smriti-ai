@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight, Heart, HeartHandshake } from 'lucide-react';
 
 export interface WelcomeScreenProps {
   onSelectPatient: () => void;
@@ -18,8 +19,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
     </div>
 
     <nav className="smriti-nav">
-      <button className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="SMRITI home">
-        <span className="logo-circle">S</span>
+      <button type="button" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="SMRITI home">
+        <span className="logo-circle"><Heart aria-hidden="true" /></span>
         <span className="logo-text">SMRITI</span>
       </button>
       <div className="nav-status"><span className="status-dot" />Always here</div>
@@ -41,23 +42,23 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
           <div className="role-grid">
             <button className="role-card patient-card animate-card delay-5" onClick={onSelectPatient}>
               <div className="card-glow" />
-              <div className="role-icon patient-icon"><span aria-hidden="true">♡</span></div>
+              <div className="role-icon patient-icon"><Heart aria-hidden="true" /></div>
               <div className="role-info">
                 <span className="role-label">FOR ME</span>
                 <strong>I&apos;m using SMRITI</strong>
                 <small>A simple, friendly space made for you.</small>
               </div>
-              <span className="role-arrow" aria-hidden="true">→</span>
+              <ArrowRight className="role-arrow" aria-hidden="true" />
             </button>
             <button className="role-card caretaker-card animate-card delay-6" onClick={onSelectCaretaker}>
               <div className="card-glow" />
-              <div className="role-icon caretaker-icon"><span aria-hidden="true">♧</span></div>
+              <div className="role-icon caretaker-icon"><HeartHandshake aria-hidden="true" /></div>
               <div className="role-info">
                 <span className="role-label">FOR SOMEONE I CARE FOR</span>
                 <strong>I&apos;m a caretaker</strong>
                 <small>Stay connected and help from anywhere.</small>
               </div>
-              <span className="role-arrow" aria-hidden="true">→</span>
+              <ArrowRight className="role-arrow" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -70,6 +71,6 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
       </div>
     </section>
 
-    <footer className="smriti-footer"><span>SMRITI AI</span><span>Memory · Care · Connection</span><span>2026</span></footer>
+    <footer className="smriti-footer"><span>SMRITI AI</span><span>Memory · Care · Connection</span><span>{new Date().getFullYear()}</span></footer>
   </main>
 );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Button, Input, Modal, Badge, ReminderItem } from '../components';
 import {
@@ -9,7 +9,7 @@ import {
 import type { Reminder } from '../types';
 
 export const RemindersPage: React.FC = () => {
-  const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [reminders, setReminders] = useState<Reminder[]>(() => getReminders());
   const [filterFilter, setFilterFilter] = useState<'all' | 'pending' | 'completed'>('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -18,10 +18,6 @@ export const RemindersPage: React.FC = () => {
   const [time, setTime] = useState('10:00 AM');
   const [type, setType] = useState<Reminder['type']>('medication');
   const [formError, setFormError] = useState('');
-
-  useEffect(() => {
-    setReminders(getReminders());
-  }, []);
 
   const handleToggle = (id: string) => {
     const updated = toggleReminderStatus(id);
